@@ -4,6 +4,6 @@ interface ResultArgument {
     result?: string;
 }
 
-const Result = ({ result }: ResultArgument) => <div>{result}</div>;
+const Result = ({ result }: ResultArgument) => <div className="resultValue">{result}</div>;
 
 export default Result;
