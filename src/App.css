@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap');
+
+#root {
+  /* width:200px;
+  margin: 40px auto; */
+  background: black;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.top {
+  height: 20px
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.result {
+  height: 150px;
+  background: #2B2B2B;
+  margin: 10px 0 10px 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.formula {
+  font-family: 'Oswald', sans-serif;
+  text-align: end;
+  height: 35%;
+  font-size: 30px;
+  color: white;
+  padding-right: 15px;
+}
+
+.resultValue {
+  font-family: 'Oswald', sans-serif;
+  text-align: end;
+  height: 65%;
+  font-size: 60px;
+  color: white;
+  padding-right: 15px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+button {
+  font-family: 'Oswald', sans-serif;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin: 5px;
+  background: #2B2B2B;
+  border: none;
+  color: white;
+  font-size: 40px;
+  padding: 0;
+}
+
+.clear button {
+  background: #9C9C9C;
+}
+
+.numLower {
+  display: flex;
+}
+
+.zero button {
+  width: 150px;
+  border-radius: 50px;
+  text-align: left;
+  padding-left: 25px;
+}
+
+.operator button {
+  background: #F58326;
+}
+
+.operator {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
