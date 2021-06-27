@@ -12,7 +12,7 @@ interface CalcState {
     temporaryValue: string;
     /** 式 */
     formula?: string;
-    /** 結果 */
+    /** 計算結果 */
     resultValue: string;
     /** 小数かどうか */
     isDecimal: boolean;
@@ -65,11 +65,11 @@ const comma = (num: string) => {
  * @param num 数字
  */
 const fixDigits = (num: string) => {
-    // 整数9桁まで入力可能にする
+    // 整数9桁以上の時、指数形式にする
     if (Number(num) >= 10e8) {
         return comma(String(Number(num).toExponential(2)));
     }
-    // 小数点以下6桁まで入力可能
+    // 小数点以下6桁以上の時、四捨五入する
     if (num.split('.')[1] && num.split('.')[1].length >= 6) {
         return comma(String(Math.round(Number(num) * 1000000) / 1000000));
     }
@@ -83,7 +83,7 @@ const notComma = (num: string) => {
     return num.replace(/,/g, "");
 };
 /** 
- * 計算結果
+ * 式と計算結果
  * @param state 現在保持しているstate（初期値はinitialAppState）
  * @param action クリックアクション
  */
@@ -91,11 +91,10 @@ const calculator = (state = initialAppState, action: ClickActions) => {
     switch (action.type) {
         case INPUT_NUMBER:
             const numAction = action as ReturnType<typeof GetAllActions.onNumClick>;
-            // 結果が出た状態で数字入力した時（結果を消して入力した数字を入れる）
+            // 結果が出た状態で数字入力した時、結果を消して入力した数字を入れる
             if (state.hasResults) {
                 return {
                     ...state,
-                    inputValue: String(Number(numAction.number)),
                     inputValue: String(numAction.number),
                     hasResults: false,
                 };
@@ -105,14 +104,14 @@ const calculator = (state = initialAppState, action: ClickActions) => {
                 inputValue: state.isDecimal ? fixDigits(notComma(state.inputValue) + numAction.number) : fixDigits(String(Number(notComma(state.inputValue)) * 10 + numAction.number)),
             };
         case INPUT_POINT:
-            // 小数点２回目打った時（小数点は効かない）
+            // 小数点２回目打った時、小数点は効かない
             if (state.isDecimal) {
                 return {
                     ...state,
                     inputValue: state.inputValue,
                 };
             }
-            // 結果が出た状態で小数点入力した時（結果を消して入力した小数点を入れる）
+            // 結果が出た状態で小数点入力した時、結果を消して入力した小数点を入れる
             if (state.hasResults) {
                 return {
                     ...state,
@@ -128,7 +127,7 @@ const calculator = (state = initialAppState, action: ClickActions) => {
             };
         case OPERATION:
             const opAction = action as ReturnType<typeof GetAllActions.onOperationClick>;
-            // ×と÷を最初に打った時（×と÷は入力できない）
+            // ×と÷を最初に打った時、×と÷は入力できない
             if (state.inputValue === "" && (opAction.opt === "×" || opAction.opt === "÷")) {
                 return {
                     ...state,
