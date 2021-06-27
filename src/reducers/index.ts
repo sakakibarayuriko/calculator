@@ -96,6 +96,7 @@ const calculator = (state = initialAppState, action: ClickActions) => {
                 return {
                     ...state,
                     inputValue: String(Number(numAction.number)),
+                    inputValue: String(numAction.number),
                     hasResults: false,
                 };
             }
