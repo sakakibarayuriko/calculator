@@ -75,6 +75,13 @@ const fixDigits = (num: string) => {
     }
     return num;
 }
+/**
+ * 3桁カンマ区切りを無くす
+ * @param num 数字
+ */
+const notComma = (num: string) => {
+    return num.replace(/,/g, "");
+};
 /** 
  * 計算結果
  * @param state 現在保持しているstate（初期値はinitialAppState）
