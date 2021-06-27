@@ -49,9 +49,21 @@ const fourOperations = (opt: OPT, firstNumber: number, secondNumber: number) => 
     }
 };
 /**
- * 大きい桁数や小数点以下桁数の調整
+ * 3桁カンマ区切りにする
  * @param num 数字
-*/
+ */
+const comma = (num: string) => {
+    const s = num.split('.');
+    let ret = String(s[0]).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    if (s.length > 1) {
+        ret += '.' + s[1];
+    }
+    return ret;
+};
+/**
+ * 大きい桁数や小数点以下桁数を調整した、カンマ区切りの数字にする
+ * @param num 数字
+ */
 const fixDigits = (num: string) => {
     // 整数9桁まで入力可能にする
     if (Number(num) >= 10e8) {
