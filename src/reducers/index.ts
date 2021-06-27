@@ -67,14 +67,14 @@ const comma = (num: string) => {
 const fixDigits = (num: string) => {
     // 整数9桁まで入力可能にする
     if (Number(num) >= 10e8) {
-        return String(Number(num).toExponential(2));
+        return comma(String(Number(num).toExponential(2)));
     }
     // 小数点以下6桁まで入力可能
     if (num.split('.')[1] && num.split('.')[1].length >= 6) {
-        return String(Math.round(Number(num) * 1000000) / 1000000);
+        return comma(String(Math.round(Number(num) * 1000000) / 1000000));
     }
-    return num;
-}
+    return comma(num);
+};
 /**
  * 3桁カンマ区切りを無くす
  * @param num 数字
@@ -101,7 +101,7 @@ const calculator = (state = initialAppState, action: ClickActions) => {
             }
             return {
                 ...state,
-                inputValue: state.isDecimal ? fixDigits(state.inputValue + numAction.number) : fixDigits(String(Number(state.inputValue) * 10 + numAction.number)),
+                inputValue: state.isDecimal ? fixDigits(notComma(state.inputValue) + numAction.number) : fixDigits(String(Number(notComma(state.inputValue)) * 10 + numAction.number)),
             };
         case INPUT_POINT:
             // 小数点２回目打った時（小数点は効かない）
@@ -137,8 +137,8 @@ const calculator = (state = initialAppState, action: ClickActions) => {
             }
             // 一時的な計算結果
             const temp = state.operation
-                ? fourOperations(state.operation, Number(state.temporaryValue), Number(state.inputValue))
-                : state.inputValue;
+                ? fourOperations(state.operation, notComma(state.temporaryValue), notComma(state.inputValue))
+                : notComma(state.inputValue);
             return {
                 ...state,
                 inputValue: "",
@@ -150,8 +150,8 @@ const calculator = (state = initialAppState, action: ClickActions) => {
         case EQUAL:
             // 計算結果
             const result = state.operation
-                ? fourOperations(state.operation, Number(state.temporaryValue), Number(state.inputValue))
-                : state.inputValue;
+                ? fourOperations(state.operation, notComma(state.temporaryValue), notComma(state.inputValue))
+                : notComma(state.inputValue);
             return {
                 ...state,
                 inputValue: fixDigits(String(result)),
