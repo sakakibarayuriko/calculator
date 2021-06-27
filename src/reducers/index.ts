@@ -34,16 +34,16 @@ const initialAppState: CalcState = {
  * @param firstNumber 演算子入力前に入力した数字
  * @param secondNumber 演算子入力後に入力した数字
  */
-const fourOperations = (opt: OPT, firstNumber: number, secondNumber: number) => {
+const fourOperations = (opt: OPT, firstNumber: string, secondNumber: string) => {
     switch (opt) {
         case "÷":
-            return firstNumber / secondNumber;
+            return Number(firstNumber) / Number(secondNumber);
         case "×":
-            return firstNumber * secondNumber;
+            return Number(firstNumber) * Number(secondNumber);
         case "+":
-            return firstNumber + secondNumber;
+            return Number(firstNumber) + Number(secondNumber);
         case "-":
-            return firstNumber - secondNumber;
+            return Number(firstNumber) - Number(secondNumber);
         default:
             return 0;
     }
